@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="Euc-8">
+<style type = "text/css">
+th{
+background-color:#ff9999;
+}
+td, th{
+padding:10px;
+border:1px solid #ff9999;
+width:100px;
+text-align:center;
+}
+.num{
+text-align:right;
+font-weight:bold;
+}
+.result {
+text-align:center;
+width:350px;
+font-weight:bold;
+padding:10px;
+}
+.button{
+background-color:#ff6699;
+margin-left:170px;
+}
+output{
+background-color:#ffcccc;
+padding:3px;
+}
+</style>
+<script type="text/javascript">
+function resultPrice() {
+var inputs = document.getElementsByTagName("input");
+
+var itsum = 0; //아이템 합
+var pricesum = 0; //가격 합
+
+for(var i=0; i<inputs.length; i++) {
+if(inputs[i].value > 0) {
+
+//아이템 개수의 합 -> "inputs[i].value" 를 더하기 = itsum
+itsum += Number(inputs[i].value);
+//Number()을 해준 이유는 없으면 문자열로 받아들여 3+4+5가 345로 나오기 때문
+
+//가격 합 -> "inputs[i].value * 가격" 을 더하기 = pricesum
+pricesum += inputs[i].value * document.getElementById("i"+(i+1)+"Price").innerHTML;
+}
+}
+
+//output에 출력하기
+document.getElementById("sumItem").value=itsum;
+document.getElementById("sumPrice").value=pricesum;
+}
+</script>
+</head>
+
+<body>
+<form oninput="resultPrice()" method=" " action=" ">
+<table border="1px" cellpadding="0" cellspacing="0">
+<tr>
+<th>상품</th>
+<th>가격(원)</th>
+<th>수량</th>
+</tr>
+<tr>
+<td>사과</td>
+<td id="i1Price" class="num">3000</td>
+<td><input type="number" min="0" max="100" id="i1"></td>
+</tr>
+<tr>
+<td>배</td>
+<td id="i2Price" class="num">5000</td>
+<td><input type="number" min="0" max="100" id="i2"></td>
+</tr>
+<tr>
+<td>딸기</td>
+<td id="i3Price" class="num">5000</td>
+<td><input type="number" min="0" max="100" id="i3"></td>
+</tr>
+</table>
+<p class="result">
+장바구니에 담긴 물건 총 <output id="sumItem" for="i1 i2 i3"></output>개 <br>
+총 금액 <output id="sumPrice" for="i1Price i2Price i3Price"></output>원 <br>
+</p>
+<input class="button" type="submit" value="장보기">
+</form>
+</body>
+</html>
