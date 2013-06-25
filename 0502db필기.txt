@@ -1,0 +1,47 @@
+select max(empno) from emp; //empno테이블에서 가장 큰값 불러와
+
+create sequence emp_seq_06
+minvalue //시퀀스가 시작되는 최초의 숫자
+maxvalue //시퀀스가 끝나는 최대 숫자
+increment by //증가 단위. 28자리 숫자까지 올 수 있음. 0은 안됨
+start with 7946 //시퀀스 생성이 시작되는 값
+nocache //속도가 빨라짐
+noorder; //최대, 최소에 다다랐을 때 다시 초기값부터 시작할지 여부, 디폴트는 nocycle
+
+insert into EMP //여기서 nextval은 의사컬럼 -> 시퀀스에는 nextval와 currval의 두개 의사컬럼이 존재
+values (emp_seq_06.nextval, 'kate', 'manager', 7839, '02/24/1987', 3000, null, 30);
+
+select * from EMP;
+
+select emp_seq_06.nextval from dual; //dual은 function이나 계산식을 테이블 생성없이 수행해보기 위한 
+				용도로 사용하는 일종의 dummy(쓰레기) 테이블. 임시의 공간
+
+dual테이블 특징
+- 오라클에 의해서 자동 생성
+- sys스키마에있지만 모든 사용자가 액세스 가능
+- varchar2(1)로 정의된 dummy라고 하는 하나의 컬럼으로 되어 있음
+- 사용자가 함수(계산)를 실행할 때 사용하기에 적절
+
+초기값이 9990이고 마지막 값이 1이며 10씩 감소하는 시퀀스생성
+-> create sequence_seq
+minvalue 1
+increment by -10
+start with 9990
+
+AND와 OR, NOT
+
+select empno || ' ' || ename 성명,
+	sal 월급,
+	deptno 부서번호 //공백이 있는데 ''안붙이면 에러난데
+from emp
+where deptno=30
+	and sal < 2000
+	and hiredate < '05-02-1981';
+
+||
+"문자연산자" concatenate 연산자(칸캐터네이트)
+문자의 결합을 담당. 다른 프로그래밍 언어들이나
+DBMS와는 다르게 '+'는 오직 수학 연산만 담당
+1. AS full_name AS별칭 이름
+2. "full name" 별칭에 공백이 있을 때
+3. full name 에러
